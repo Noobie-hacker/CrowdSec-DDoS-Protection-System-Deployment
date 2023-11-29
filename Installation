@@ -1,0 +1,46 @@
+Crowdsec Installation Guide
+
+Cloudflare API token: DmJNH4tox96wm-*************
+
+For reference: https://www.crowdsec.net/blog/how-to-beat-application-ddos
+
+crowdsec ---> this only detects attacks. it can not make decisions.
+
+install cloudflare bouncer ------> this makes the decisions. To use these we need the api token of cloudflare.  
+
+https://docs.crowdsec.net/docs/bouncers/cloudflare/
+
+
+Crowdsec installation: 
+
+Install the crowdsec repository:
+curl -s https://packagecloud.io/install/repositories/crowdsec/crowdsec/script.deb.sh | sudo bash
+
+Install Crowdsec:
+sudo apt install crowdsec
+
+Enable or disable collections:
+/usr/share/crowdsec/wizard.sh -c
+
+
+
+Crowdsec Cloudflare Bouncer Installation:
+
+Install the cloudflare bouncer (required for taking action against attacks):
+
+sudo apt install crowdsec-cloudflare-bouncer
+
+
+sudo crowdsec-cloudflare-bouncer -g <CLOUDFLARE_TOKEN1> -o /etc/crowdsec/bouncers/crowdsec-cloudflare-bouncer.yaml 
+
+sudo crowdsec-cloudflare-bouncer -s 
+
+sudo systemctl start crowdsec-cloudflare-bouncer
+
+Install Docker (for the dashboard):
+
+sudo apt install docker.io
+
+Install the dashboard component:
+
+sudo cscli dashboard setup --listen 0.0.0.0
